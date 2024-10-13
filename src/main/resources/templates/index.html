@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Copa Mundial</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Agregando Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Oswald', sans-serif;
+            background-color: #e8e3ff;
+            /* Azul profundo */
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Estilos del Navbar */
+        nav.navbar {
+            background-color: #002366;
+            /* Azul marino */
+            padding: 1rem;
+            text-align: center;
+        }
+
+        nav.navbar ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav.navbar ul li {
+            display: inline;
+            margin-right: 20px;
+        }
+
+        nav.navbar ul li a {
+            color: #FFFFFF;
+            /* Blanco puro */
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        nav.navbar ul li a:hover {
+            color: #FF6347;
+            /* Rojo vibrante */
+        }
+
+        /* Estilos del carrusel */
+        .carousel-item img {
+            width: 100%;
+            height: 300px;
+            /* Incrementado para más impacto visual */
+            object-fit: cover;
+        }
+
+        .carousel-caption {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #ffffff;
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.5);
+            /* Fondo negro semi-transparente */
+            padding: 1rem;
+            border-radius: 10px;
+        }
+
+        .carousel-caption h5 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .carousel-caption p {
+            font-size: 1.2rem;
+        }
+
+        /* Acordeón con contorno brillante y animado */
+        .accordion-button {
+            font-weight: bold;
+            border-radius: 10px;
+            transition: all 0.4s ease;
+            border: none;
+            position: relative;
+            overflow: hidden;
+            background-color: #00642a;
+            /* Verde esmeralda */
+            color: #FFFFFF;
+        }
+
+        .accordion-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            transition: all 0.5s ease;
+            filter: blur(5px);
+            opacity: 0.8;
+            z-index: -1;
+            transform: scaleX(0);
+        }
+
+        .accordion-button:hover::before {
+            transform: scaleX(1);
+        }
+
+        .accordion-button:focus {
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+        }
+
+        .accordion-item {
+            border: none;
+            margin-bottom: 15px;
+            margin-left: 10%;
+            margin-right: 10%;
+            background-color: transparent; /* Asegura que el fondo sea transparente */
+        }
+
+        .accordion-body {
+            background-color: #0f4494;
+            /* Azul más claro para contraste */
+            padding: 1.2rem;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+            font-size: 1.1rem;
+            color: #fff;
+        }
+
+        /* Estilos del footer */
+        footer {
+            padding: 1rem;
+            text-align: center;
+            background-color: #DAA520;
+            /* Oro metálico */
+            color: #2E2E2E;
+            /* Negro carbón */
+        }
+
+        footer p {
+            margin: 0;
+        }
+
+        /* Estilos responsivos */
+        @media (max-width: 768px) {
+            .accordion-button {
+                font-size: 1rem;
+            }
+
+            .accordion-body {
+                font-size: 0.9rem;
+            }
+
+            .carousel-item img {
+                height: 300px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navegación -->
+    <nav class="navbar">
+        <ul>
+            <li><a th:href="@{/entrenadores/}">Entrenadores</a></li>
+            <li><a th:href="@{/asociaciones/}">Asociaciones</a></li>
+            <li><a th:href="@{/competiciones/}">Competiciones</a></li>
+            <li><a th:href="@{/clubes/}">Clubes</a></li>
+            <li><a th:href="@{/jugadores/}">Jugadores</a></li>
+        </ul>
+    </nav>
+
+    <!-- Carrusel de imágenes -->
+    <div class="container my-4">
+        <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active"
+                    aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1"
+                    aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2"
+                    aria-label="Slide 3"></button>
+            </div>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <div style="width:100%;height:0;padding-bottom:45%;position:relative;"><iframe
+                            src="https://giphy.com/embed/AEbUUwppEEEUXj4oOn" width="100%" height="100%"
+                            style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
+                    </div>
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>Celebración del Fútbol</h5>
+                        <p>La Copa Mundial une a millones de fanáticos en torno al deporte rey.</p>
+                    </div>
+                </div>
+
+                <div class="carousel-item">
+                    <div style="width:100%;height:0;padding-bottom:42%;position:relative;"><iframe
+                            src="https://giphy.com/embed/usjtDKDAmOuPu" width="100%" height="100%"
+                            style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
+                    </div>
+
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>Jugadores Legendarios</h5>
+                        <p>Los mejores jugadores del mundo compiten por la gloria en el escenario más grande.</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div style="width:100%;height:0;padding-bottom:37%;position:relative;"><iframe
+                            src="https://giphy.com/embed/cJ49Txejvl1SPmIfzs" width="100%" height="100%"
+                            style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
+                    </div>
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>Pasión y Gloria</h5>
+                        <p>Los momentos más inolvidables ocurren en la Copa Mundial.</p>
+                    </div>
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"
+                data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Anterior</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions"
+                data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Siguiente</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Acordeón informativo -->
+    <div class="accordion mt-4" id="accordionExample">
+        <div class="accordion-item accordion-item mx-auto px-4">
+            <h2 class="accordion-header " id="headingOne">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
+                    aria-expanded="true" aria-controls="collapseOne">
+                    Historia de la Copa Mundial
+                </button>
+            </h2>
+            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+                data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    La Copa Mundial de la FIFA es el torneo de fútbol más importante a nivel internacional. Fundada en
+                    1930, ha sido testigo de las hazañas más grandes del fútbol.
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item accordion-item mx-auto px-4">
+            <h2 class="accordion-header" id="headingTwo">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    Ediciones Memorables
+                </button>
+            </h2>
+            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+                data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    Desde la victoria de Brasil en 1970 hasta la sorpresiva victoria de Francia en 1998, la Copa Mundial
+                    ha brindado ediciones inolvidables a lo largo de los años.
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item accordion-item mx-auto px-4">
+            <h2 class="accordion-header " id="headingThree">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                    Equipos y Jugadores Destacados
+                </button>
+            </h2>
+            <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
+                data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    Grandes equipos como Brasil, Alemania, Argentina y jugadores como Pelé, Maradona, y Messi han dejado
+                    su huella en la historia del fútbol.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="mt-5">
+        <p>Copa Mundial &copy; 2024 | Todos los derechos reservados | Gabriel Ortega</p>
+    </footer>
+
+    <!-- Scripts de Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
