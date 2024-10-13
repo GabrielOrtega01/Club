@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Registro de Jugadores</title>
+    <style>
+        :root {
+            --primary-color: hsl(189, 92%, 40%);
+            --hover-color: hsl(189, 99%, 26%);
+            --text-dark: hsl(240, 15%, 9%);
+            --background-image: url('https://media.istockphoto.com/id/1163749879/es/foto/jugador-de-f%C3%BAtbol-patea-una-pelota.jpg?s=612x612&w=0&k=20&c=NFc1RIf2AQRCBxp5Bs3uAguz9Hga-KheHK_kp-lbW2w=');
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background: var(--background-image) no-repeat center center fixed;
+            background-size: cover;
+            position: relative;
+        }
+
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            z-index: -1;
+        }
+
+        main {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: calc(100vh - 60px);
+        }
+
+        .card {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            padding: 1rem;
+            width: 90%;
+            max-width: 400px;
+            background-color: white;
+            border-radius: 1rem;
+            box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+            transition: border-color 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 20px rgba(0, 128, 255, 0.5);
+        }
+
+        .card_title {
+            font-size: 1.5rem;
+            color: var(--text-dark);
+            text-align: center;
+        }
+
+        .form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+            width: 100%;
+            /* Asegura que el grupo ocupe el ancho completo */
+        }
+
+        label {
+            font-size: 0.9rem;
+            color: var(--text-dark);
+            display: block; /* Asegura que el label esté en una nueva línea */
+            margin-bottom: 0.5rem; /* Espacio entre el label y el input */
+        }
+
+        input,
+        select {
+            padding: 0.5rem;
+            border: 1px solid var(--text-dark);
+            border-radius: 0.5rem;
+            background-color: hsl(0, 0%, 95%);
+            color: var(--text-dark);
+            width: 100%;
+            max-width: 300px;
+        }
+
+        input::placeholder {
+            color: hsl(0, 0%, 70%);
+        }
+
+        .button {
+            cursor: pointer;
+            padding: 0.5rem;
+            background-image: linear-gradient(0deg, var(--primary-color), var(--hover-color) 100%);
+            font-size: 0.9rem;
+            color: white;
+            border: none;
+            border-radius: 9999px;
+            box-shadow: inset 0 -2px 25px -4px rgba(255, 255, 255, 0.3);
+            margin-top: 1rem;
+            text-align: center;
+            display: inline-block;
+            text-decoration: none;
+            max-width: 300px;
+        }
+
+        .button:hover {
+            background-color: var(--hover-color);
+        }
+
+        .button.regresar {
+            margin-top: 1rem;
+        }
+
+        footer {
+            background-color: #007bff;
+            color: #ffffff;
+            padding: 1rem;
+            text-align: center;
+            position: static;
+            bottom: 0;
+            width: 100%;
+        }
+
+        footer p {
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <main>
+        <div class="card">
+            <h2 class="card_title">Registro de Jugadores</h2>
+            <form th:action="@{/jugadores/save}" th:object="${jugador}" method="post" class="form">
+                <input type="hidden" th:field="*{id}" />
+
+                <!-- Nombre del Jugador -->
+                <div class="form-group">
+                    <label for="nombre">Nombre:</label>
+                    <input type="text" id="nombre" name="nombre" placeholder="Ingresa el nombre del jugador" th:field="*{nombre}" required>
+                </div>
+
+                <!-- Apellido del Jugador -->
+                <div class="form-group">
+                    <label for="apellido">Apellido:</label>
+                    <input type="text" id="apellido" name="apellido" placeholder="Ingresa el apellido del jugador" th:field="*{apellido}" required>
+                    <small class="form-text text-danger" th:if="${#fields.hasErrors('apellido')}" th:errors="*{apellido}"></small>
+                </div>
+
+                <!-- Número del Jugador -->
+                <div class="form-group">
+                    <label for="numero">Número:</label>
+                    <input type="number" id="numero" name="numero" placeholder="Ingresa el número del jugador" th:field="*{numero}" required>
+                    <small class="form-text text-danger" th:if="${#fields.hasErrors('numero')}" th:errors="*{numero}"></small>
+                </div>
+
+                <!-- Posición del Jugador -->
+                <div class="form-group">
+                    <label for="posicion">Posicion:</label>
+                    <input type="text" id="posicion" name="posicion" placeholder="Ingresa la posición del jugador" th:field="*{posicion}" required>
+                    <small class="form-text text-danger" th:if="${#fields.hasErrors('posicion')}" th:errors="*{posicion}"></small>
+                </div>
+
+                <!-- Selección del Club -->
+                <div class="form-group">
+                    <label for="club">Club</label>
+                    <select id="club" th:field="*{club}" class="form-select" required>
+                        <option value="" disabled selected>Seleccione un club</option>
+                        <option th:each="club : ${listaClubes}" th:text="${club.nombre}" th:value="${club.id}"></option>
+                    </select>
+                    <small class="form-text text-danger" th:if="${#fields.hasErrors('club')}" th:errors="*{club}"></small>
+                </div>
+
+                <button type="submit" class="button">Registrar Jugador</button>
+                <a href="#" class="button regresar" onclick="history.back()">Regresar</a>
+            </form>
+        </div>
+    </main>
+
+    <footer>
+        <p>Copa Mundial &copy; 2024 | Todos los derechos reservados | Gabriel Ortega</p>
+    </footer>
+</body>
+
+</html>
